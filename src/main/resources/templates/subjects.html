@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BodyWight application</title>
+</head>
+<body>
+<h1>Mentett rekordok:</h1>
+
+<table border="1px solid black">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Felhasználó id</th>
+        <th>Kezdő dátum</th>
+        <th>Záró dátum</th>
+        <th>Testsúly(KG)</th>   </tr>
+    </thead>
+    <tbody>
+    <tr th:each="subject :${subjects}">
+        <td th:text="${subject.id}">Id</td>
+        <td><a th:href="@{/subjects/{id}(id=${subject.id})}" th:text="${subject.subjectId}">Felhasználó id</a></td>
+        <td th:text="${subject.dateFrom}">Kezdő dátum</td>
+        <td th:text="${subject.dateTo}">Záró dátum</td>
+        <td th:text="${subject.weight}">Testsúly(KG)</td>
+        <td><a th:href="@{/deleteSubject/{id}(id=${subject.id})}">Törlés</a></td>
+    </tr>
+    </tbody>
+</table>
+<br><br>
+
+<h1>Új rekord mentése:</h1>
+
+<form th:action="@{/subjects}" method="post" th:object="${newSubject}">
+          <input type="hidden" th:field="*{id}" /> <br/>
+    Felhasználó id: <input type="number" min="1" th:field="*{subjectId}" /> <br/>
+    Kezdő dátum: <input type="date" th:field="*{dateFrom}" /> <br/>
+    Záró dátum: <input type="date" th:field="*{dateTo}" /> <br/>
+    Testsúly(KG): <input type="number" min="10" th:field="*{weight}" /> <br/>
+    <input type="submit" value="Mentés" />
+</form>
+
+
+<h1>Rekord keresése dátum szerint:</h1>
+<form th:action="@{/findSubjectByDate}" method="get" th:name="date" th:object="${date}">
+
+<!--    Felhasználó id: <input type="number" min="1" th:field="*{subjectId}" /> <br/>-->
+    Keresett dátum: <input type="date" /> <br/>
+    <input type="submit" value="Keresés" />
+</form>
+
+<h2>Találatok:</h2>
+
+<table border="1px solid black">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Felhasználó id</th>
+        <th>Kezdő dátum</th>
+        <th>Záró dátum</th>
+        <th>Testsúly(KG)</th>   </tr>
+    </thead>
+    <tbody>
+    <tr th:each="subject :${findSubjectByDate}">
+        <td th:text="${subject.id}">Id</td>
+        <td th:text="${subject.subjectId}">Felhasználó id</td>
+        <td th:text="${subject.dateFrom}">Kezdő dátum</td>
+        <td th:text="${subject.dateTo}">Záró dátum</td>
+        <td th:text="${subject.weight}">Testsúly(KG)</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
