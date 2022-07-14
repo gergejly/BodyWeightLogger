@@ -46,11 +46,12 @@ public class SubjectController {
     }
 
     @GetMapping("/findSubjectByDate")
-    public String findSubjectByDate(@RequestParam LocalDate date , Map<String, Object> model){
-            //@RequestParam(value="date", required = false) LocalDate date, Map<String, Object> model ){
+    public String findSubjectByDate( @RequestParam(value="date", required = false) LocalDate date){
+
         //subjectService.findByDate(date);
-        model.put("subjects", subjectService.findByDate(date));
-        model.put("newSubject", new Subject());
+        List filteredSubjects=subjectService.findByDate(date);
+       // model.put("subjects",filteredSubjects);
+
         return "subjects";
     }
 }
