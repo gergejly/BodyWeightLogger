@@ -42,10 +42,10 @@
 
 
 <h1>Rekord keresése dátum szerint:</h1>
-<form th:action="@{/findSubjectByDate}" method="get" th:name="date" th:object="${date}">
+<form th:action="@{/findSubjectByDate}" method="get" th:object="${newSubject}">
 
 <!--    Felhasználó id: <input type="number" min="1" th:field="*{subjectId}" /> <br/>-->
-    Keresett dátum: <input type="date" /> <br/>
+    Keresett dátum: <input type="date"  th:name="date"/> <br/>
     <input type="submit" value="Keresés" />
 </form>
 

@@ -3,6 +3,7 @@ package bwa.web;
 import bwa.model.Subject;
 import bwa.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,18 +41,21 @@ public class SubjectController {
 
     @GetMapping("/deleteSubject/{id}")
     public String deleteSubject(@PathVariable int id){
-        //subjectService.findAll().removeIf(e -> e.getId()==id);
         subjectService.deleteSubject(id);
         return "redirect:/subjects";
     }
 
+
     @GetMapping("/findSubjectByDate")
-    public String findSubjectByDate( @RequestParam(value="date", required = false) LocalDate date){
+    public String findSubjectByDate(@RequestParam(value="date")
+                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+                                                LocalDate date, Map<String, Object> model){
 
-        //subjectService.findByDate(date);
-        List filteredSubjects=subjectService.findByDate(date);
-       // model.put("subjects",filteredSubjects);
+        List <Subject>filteredSubjects=subjectService.findByDate(date);
 
+        model.put("subjects", filteredSubjects);
+        model.put("newSubject", new Subject());
         return "subjects";
     }
+
 }

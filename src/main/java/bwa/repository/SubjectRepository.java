@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface SubjectRepository extends JpaRepository<Subject, Long> {
 
-    @Query(value = "SELECT * FROM subject  WHERE date_from >=?1 And date_to<=?1;", nativeQuery = true)
+    @Query(value = "SELECT * FROM subject  WHERE date_from >=?1 And date_to<=?1", nativeQuery = true)
     List<Subject> findByDate(LocalDate date);
 }
