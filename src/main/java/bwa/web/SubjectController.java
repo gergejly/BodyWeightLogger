@@ -5,7 +5,6 @@ import bwa.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,6 +45,20 @@ public class SubjectController {
     }
 
 
+    @GetMapping("/subjects/{id}")
+    public String editSubject (@PathVariable long id, Map<String,Object> model){
+        Subject selectedSubject =subjectService.findSubjectById(id).get();
+        model.put("subject",selectedSubject);
+        return "editSubject";
+    }
+    @PostMapping("/updateSubject")
+    public String updateSubject(Subject subject){
+        subjectService.findSubjectById(subject.getId());
+        subjectService.updateSubject(subject);
+        return "redirect:subjects";
+    }
+
+
     @GetMapping("/findSubjectByDate")
     public String findSubjectByDate(@RequestParam(value="date")
                                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -57,5 +70,4 @@ public class SubjectController {
         model.put("newSubject", new Subject());
         return "subjects";
     }
-
 }

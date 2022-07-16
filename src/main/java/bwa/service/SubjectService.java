@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SubjectService {
@@ -31,5 +32,16 @@ public class SubjectService {
 
     public List<Subject> findByDate(LocalDate date){
         return subjectRepository.findByDate(date);
+    }
+
+    public Subject updateSubject(Subject subject){
+//        if (!subjectRepository.existsById(subject.getId())){
+//            return null;
+//        }
+        return subjectRepository.save(subject);
+    }
+
+    public Optional<Subject> findSubjectById(long id) {
+        return subjectRepository.findById(id);
     }
 }
