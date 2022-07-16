@@ -61,13 +61,13 @@ public class SubjectController {
 
     @GetMapping("/findSubjectByDate")
     public String findSubjectByDate(@RequestParam(value="date")
-                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                                                 LocalDate date, Map<String, Object> model){
 
         List <Subject>filteredSubjects=subjectService.findByDate(date);
 
         model.put("subjects", filteredSubjects);
         model.put("newSubject", new Subject());
-        return "subjects";
+        return "redirect:subjects";
     }
 }

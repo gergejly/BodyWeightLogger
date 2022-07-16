@@ -40,9 +40,9 @@
     <input type="submit" value="Mentés" />
 </form>
 
-
+<p>------------------------------------------------------------------------------------</p>
 <h1>Rekord keresése dátum szerint:</h1>
-<form th:action="@{/findSubjectByDate}" method="get" th:object="${newSubject}">
+<form th:action="@{/findSubjectByDate}" method="get"  th:object="${subject}">
 
 <!--    Felhasználó id: <input type="number" min="1" th:field="*{subjectId}" /> <br/>-->
     Keresett dátum: <input type="date"  th:name="date"/> <br/>
@@ -61,7 +61,7 @@
         <th>Testsúly(KG)</th>   </tr>
     </thead>
     <tbody>
-    <tr th:each="subject :${findSubjectByDate}">
+    <tr th:each="subject :${subjects}">
         <td th:text="${subject.id}">Id</td>
         <td th:text="${subject.subjectId}">Felhasználó id</td>
         <td th:text="${subject.dateFrom}">Kezdő dátum</td>
