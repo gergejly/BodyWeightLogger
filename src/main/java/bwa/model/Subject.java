@@ -28,7 +28,8 @@ public class Subject {
         this.weight = weight;
     }
 
-    public Subject(){}
+    public Subject() {
+    }
 
     public long getId() {
         return id;

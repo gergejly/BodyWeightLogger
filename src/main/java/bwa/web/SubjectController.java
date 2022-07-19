@@ -26,33 +26,34 @@ public class SubjectController {
     }
 
     @GetMapping("/subjects")
-    public String listSubjects (Map<String, Object> model){
+    public String listSubjects(Map<String, Object> model) {
         model.put("subjects", subjectService.findAll());
         model.put("newSubject", new Subject());
         return "subjects";
     }
 
     @PostMapping("/subjects")
-    public String addSubject(Subject subject){
+    public String addSubject(Subject subject) {
         subjectService.save(subject);
         return "redirect:subjects";
     }
 
     @GetMapping("/deleteSubject/{id}")
-    public String deleteSubject(@PathVariable int id){
+    public String deleteSubject(@PathVariable int id) {
         subjectService.deleteSubject(id);
         return "redirect:/subjects";
     }
 
 
     @GetMapping("/subjects/{id}")
-    public String editSubject (@PathVariable long id, Map<String,Object> model){
-        Subject selectedSubject =subjectService.findSubjectById(id).get();
-        model.put("subject",selectedSubject);
+    public String editSubject(@PathVariable long id, Map<String, Object> model) {
+        Subject selectedSubject = subjectService.findSubjectById(id).get();
+        model.put("subject", selectedSubject);
         return "editSubject";
     }
+
     @PostMapping("/updateSubject")
-    public String updateSubject(Subject subject){
+    public String updateSubject(Subject subject) {
         subjectService.findSubjectById(subject.getId());
         subjectService.updateSubject(subject);
         return "redirect:subjects";
@@ -60,14 +61,14 @@ public class SubjectController {
 
 
     @GetMapping("/findSubjectByDate")
-    public String findSubjectByDate(@RequestParam(value="date")
-                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                LocalDate date, Map<String, Object> model){
+    public String findSubjectByDate(@RequestParam(value = "date")
+                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                            LocalDate date, Map<String, Object> model) {
 
-        List <Subject>filteredSubjects=subjectService.findByDate(date);
+        List<Subject> filteredSubjects = subjectService.findByDate(date);
 
         model.put("subjects", filteredSubjects);
         model.put("newSubject", new Subject());
-        return "redirect:subjects";
+        return "subjects";
     }
 }

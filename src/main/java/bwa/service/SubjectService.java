@@ -17,24 +17,24 @@ public class SubjectService {
     SubjectRepository subjectRepository;
 
     @Transactional
-    public Subject save (Subject subject){
+    public Subject save(Subject subject) {
         return subjectRepository.save(subject);
     }
 
-    public List<Subject> findAll(){
+    public List<Subject> findAll() {
         return subjectRepository.findAll();
     }
 
     @Transactional
-    public void deleteSubject(long id){
+    public void deleteSubject(long id) {
         subjectRepository.deleteById(id);
     }
 
-    public List<Subject> findByDate(LocalDate date){
+    public List<Subject> findByDate(LocalDate date) {
         return subjectRepository.findByDate(date);
     }
 
-    public Subject updateSubject(Subject subject){
+    public Subject updateSubject(Subject subject) {
 //        if (!subjectRepository.existsById(subject.getId())){
 //            return null;
 //        }
