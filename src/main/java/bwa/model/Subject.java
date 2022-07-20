@@ -2,13 +2,11 @@ package bwa.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "subject")
 public class Subject {
 
     @Id
@@ -19,7 +17,7 @@ public class Subject {
     private LocalDate dateFrom;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateTo;
-    private double weight;
+    private int weight;
 
     public Subject(int subjectId, LocalDate dateFrom, LocalDate dateTo, int weight) {
         this.subjectId = subjectId;
@@ -63,11 +61,11 @@ public class Subject {
         this.dateTo = dateTo;
     }
 
-    public double getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 }

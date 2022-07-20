@@ -5,120 +5,110 @@
     <meta charset="UTF-8">
     <title>Testsúly rögzítő alkalmazás</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
-    <div class=" d-flex justify-content-center my-3">
-        <h1>Rekordok:</h1>
+<div class=" d-flex justify-content-center my-3">
+    <h1>Rekordok:</h1>
+</div>
+
+<div class=" d-flex justify-content-center">
+    <div class="col-xl-10 ">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Felhasználó</th>
+                <th>Kezdő dátum</th>
+                <th>Záró dátum</th>
+                <th>Testsúly (KG)</th>
+                <th>Művelet</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="subject :${subjects}">
+                <td th:text="${subject.id}">Id</td>
+                <td><a th:href="@{/subjects/{id}(id=${subject.id})}"
+                       th:text="${subject.subjectId}">Felhasználó</a></td>
+                <td th:text="${subject.dateFrom}">Kezdő dátum</td>
+                <td th:text="${subject.dateTo}">Záró dátum</td>
+                <td th:text="${subject.weight}">Testsúly (KG)</td>
+                <td>
+                    <button><a th:href="@{/deleteSubject/{id}(id=${subject.id})}">Törlés</a></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
+</div>
+<br><br>
+<!--  <p>------------------------------------------------------------------------------------</p> -->
+<div class=" d-flex justify-content-center mt-n4">
+    <h2>Új rekord mentése:</h2>
+</div>
+<div class=" d-flex justify-content-center">
 
-    <div class=" d-flex justify-content-center">
-        <div class="col-xl-10 ">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Felhasználó</th>
-                        <th>Kezdő dátum</th>
-                        <th>Záró dátum</th>
-                        <th>Testsúly (KG)</th>
-                        <th>Művelet</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="subject :${subjects}">
-                        <td th:text="${subject.id}">Id</td>
-                        <td><a th:href="@{/subjects/{id}(id=${subject.id})}"
-                                th:text="${subject.subjectId}">Felhasználó</a></td>
-                        <td th:text="${subject.dateFrom}">Kezdő dátum</td>
-                        <td th:text="${subject.dateTo}">Záró dátum</td>
-                        <td th:text="${subject.weight}">Testsúly (KG)</td>
-                        <td><button><a th:href="@{/deleteSubject/{id}(id=${subject.id})}">Törlés</a></button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <br><br>
-    <!--  <p>------------------------------------------------------------------------------------</p> -->
-    <div class=" d-flex justify-content-center mt-n4">
-        <h2>Új rekord mentése:</h2>
-    </div>
-    <div class=" d-flex justify-content-center">
-
-        <form th:action="@{/subjects}" method="post" th:object="${newSubject}">
-            <table class="table table-borderless">
+    <form th:action="@{/subjects}" method="post" th:object="${newSubject}">
+        <table class="table table-borderless">
 
 
-                <input type="hidden" th:field="*{id}" />
-                <tr>
-                    <td>Felhasználó id: </td>
-                    <td><input type="number" min="1" th:field="*{subjectId}" /> </td>
-                </tr>
-                <tr>
-                    <td>
-                        Kezdő dátum:</td>
-                    <td> <input type="date" th:field="*{dateFrom}" /> </td>
-                </tr>
-                <tr>
-                    <td>
-                        Záró dátum:</td>
-                    <td> <input type="date" th:field="*{dateTo}" /> </td>
-                </tr>
-                <tr>
-                    <td>
-                        Testsúly(KG): </td>
-                    <td> <input type="number" min="10" th:field="*{weight}" />
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input class="text-left" type="submit" value="Mentés" /></td>
-            </table>
+            <input type="hidden" th:field="*{id}"/>
+            <tr>
+                <td>Felhasználó id:</td>
+                <td><input type="number" min="1" th:field="*{subjectId}"/></td>
+            </tr>
+            <tr>
+                <td>
+                    Kezdő dátum:
+                </td>
+                <td><input type="date" th:field="*{dateFrom}"/></td>
+            </tr>
+            <tr>
+                <td>
+                    Záró dátum:
+                </td>
+                <td><input type="date" th:field="*{dateTo}"/></td>
+            </tr>
+            <tr>
+                <td>
+                    Testsúly(KG):
+                </td>
+                <td><input type="number" min="10" th:field="*{weight}"/>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input class="text-left" type="submit" value="Mentés"/></td>
+        </table>
 
 
-        </form>
+    </form>
 
-    </div>
-    <!-- <p>------------------------------------------------------------------------------------</p> -->
-    <div class=" d-flex justify-content-center">
-        <h2>Rekord keresése dátum szerint:</h2>
-    </div>
-    <div class=" d-flex justify-content-center">
-        <form th:action="@{/findSubjectByDate}" method="get" th:object="${subject}">
-            <table class="table table-borderless">
-                <tr><td>
-                Keresett dátum: </td><td> <input type="date" th:name="date" /> </td></tr>
-                <tr><td>
-                <input type="submit" value="Keresés" /> </td> <td>
-                <input type="button" value="Vissza" onclick="history.back()" ;> </td></tr>
-            </table>
-        </form>
-    </div>
-
-    <!--<h2>Találatok:</h2>-->
-
-    <!--<table border="1px solid black">-->
-    <!--    <thead>-->
-    <!--    <tr>-->
-    <!--        <th>Id</th>-->
-    <!--        <th>Felhasználó id</th>-->
-    <!--        <th>Kezdő dátum</th>-->
-    <!--        <th>Záró dátum</th>-->
-    <!--        <th>Testsúly(KG)</th>   </tr>-->
-    <!--    </thead>-->
-    <!--    <tbody>-->
-    <!--    <tr th:each="subject :${findSubjectByDate}">-->
-    <!--        <td th:text="${subject.id}">Id</td>-->
-    <!--        <td th:text="${subject.subjectId}">Felhasználó id</td>-->
-    <!--        <td th:text="${subject.dateFrom}">Kezdő dátum</td>-->
-    <!--        <td th:text="${subject.dateTo}">Záró dátum</td>-->
-    <!--        <td th:text="${subject.weight}">Testsúly(KG)</td>-->
-    <!--    </tr>-->
-    <!--    </tbody>-->
-    <!--</table>-->
-    </div>
+</div>
+<!-- <p>------------------------------------------------------------------------------------</p> -->
+<div class=" d-flex justify-content-center">
+    <h2>Rekord keresése dátum szerint:</h2>
+</div>
+<div class=" d-flex justify-content-center">
+    <form th:action="@{/findSubjectByDate}" method="get" th:object="${subject}">
+        <table class="table table-borderless">
+            <tr>
+                <td>
+                    Keresett dátum:
+                </td>
+                <td><input type="date" th:name="date"/></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Keresés"/></td>
+                <td>
+                    <input type="button" value="Vissza" onclick="history.back()" ;></td>
+            </tr>
+        </table>
+    </form>
+</div>
+</div>
 </body>
 
 </html>
