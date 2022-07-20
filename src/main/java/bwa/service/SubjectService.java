@@ -35,9 +35,6 @@ public class SubjectService {
     }
 
     public Subject updateSubject(Subject subject) {
-//        if (!subjectRepository.existsById(subject.getId())){
-//            return null;
-//        }
         return subjectRepository.save(subject);
     }
 

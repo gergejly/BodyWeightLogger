@@ -3,7 +3,6 @@ package bwa.service;
 import bwa.model.Subject;
 import bwa.repository.SubjectRepository;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
@@ -29,15 +28,16 @@ public class SubjectSeviceTest {
     @InjectMocks
     private SubjectService subjectService;
 
+    private int subjectId = 10;
+    private LocalDate dateFrom = LocalDate.of(2022, 11, 11);
+    private LocalDate dateTo = LocalDate.of(2022, 12, 12);
+    private double bodyWeight = 71;
+
 
     @Test
-    public void whenSaveSubject_shouldReturnSubject() {
-        int subjectId = 10;
-        LocalDate dateFrom = LocalDate.of(2022, 11, 11);
-        LocalDate dateTo = LocalDate.of(222, 12, 12);
-        double bodyWeight = 71;
+    public void createSubject_shouldReturnSubject() {
 
-        Subject subject = new Subject(subjectId, dateFrom, dateTo, (int) bodyWeight);
+        Subject subject = createSubject();
 
         when(subjectRepository.save(ArgumentMatchers.any(Subject.class))).thenReturn(subject);
 
@@ -53,7 +53,7 @@ public class SubjectSeviceTest {
     @Test
     public void shouldReturn_AllSubjects() {
         List<Subject> subjects = new ArrayList<>();
-        subjects.add(new Subject(11, LocalDate.of(2021, 11, 11), LocalDate.of(2011, 12, 12), 72));
+        subjects.add(createSubject());
         subjects.add(new Subject(11, LocalDate.of(2021, 12, 12), LocalDate.of(2011, 12, 21), 71));
 
         given(subjectRepository.findAll()).willReturn(subjects);
@@ -66,8 +66,9 @@ public class SubjectSeviceTest {
 
     @Test
     public void whenGivenId_shouldDeleteSubject_ifExists() {
-        Subject subject = new Subject(11, LocalDate.of(2021, 12, 12), LocalDate.of(2011, 12, 21), 65);
+        Subject subject = createSubject();
         subject.setId(1);
+        subjectService.save(subject);
 
         subjectService.deleteSubject(subject.getId());
         assertThat(subjectService.findAll().size()).isZero();
@@ -76,7 +77,7 @@ public class SubjectSeviceTest {
 
     @Test
     public void whenGivenId_shouldUpdateSubject() {
-        Subject subject = new Subject(11, LocalDate.of(2021, 12, 12), LocalDate.of(2011, 12, 21), 65);
+        Subject subject = createSubject();
         subject.setId(19);
 
         subjectService.updateSubject(subject);
@@ -88,7 +89,7 @@ public class SubjectSeviceTest {
     @Test
     public void whenGivenDate_shouldFindByDate() {
         LocalDate date = LocalDate.of(2021, 12, 13);
-        Subject subject = new Subject(11, LocalDate.of(2021, 12, 12), LocalDate.of(2011, 12, 21), 65);
+        Subject subject = createSubject();
         subjectService.save(subject);
         List<Subject> lookingFor = subjectService.findByDate(date);
         assertThat(lookingFor.size() > 0);
@@ -99,12 +100,16 @@ public class SubjectSeviceTest {
     @Test
     public void whenGivenInvalidDate_findNull() {
         LocalDate date = LocalDate.of(2020, 12, 13);
-        Subject subject = new Subject(11, LocalDate.of(2021, 12, 12), LocalDate.of(2011, 12, 21), 65);
+        Subject subject = createSubject();
 
         subjectService.save(subject);
         List<Subject> lookingFor = subjectService.findByDate(date);
         assertThat(lookingFor.size()).isZero();
 
         verify(subjectRepository).findByDate(date);
+    }
+
+    public Subject createSubject() {
+        return new Subject(subjectId, dateFrom, dateTo, (int) bodyWeight);
     }
 }
